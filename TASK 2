@@ -1,0 +1,9 @@
+#DESIGN A RESTFUL API FOR A LIBRARY OR INVENTORY SYSTEM
+Designing a RESTful API for a Library or Inventory System involves creating endpoints for handling common actions like adding, updating, deleting, and retrieving information.
+Below is a breakdown of how such an API could be structured, including typical resources, endpoints, HTTP methods, and sample request/response formats.
+ASSUMPTIONS:
+ • We are building an Inventory System(library, book collection, or any inventory system).
+ • Resources include Books, Users, Transactions (for borrowing or purchasing items).
+KEY RESOURCES:
+• BOOKS: Items in the inventory.
+• USERS:
