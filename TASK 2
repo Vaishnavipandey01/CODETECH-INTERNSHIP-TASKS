@@ -4,6 +4,173 @@ Below is a breakdown of how such an API could be structured, including typical r
 ASSUMPTIONS:
  • We are building an Inventory System(library, book collection, or any inventory system).
  • Resources include Books, Users, Transactions (for borrowing or purchasing items).
-KEY RESOURCES:
-• BOOKS: Items in the inventory.
-• USERS:
+ASSUMPTIONS:
+* The system will have Books as the main resource.
+* Operations include adding, updating, deleting, and retrieving books.
+* We will implement typical CRUD operations: Create, Read, Update, and Delete.
+* Filtering and pagination for book listings will also be included.
+API RESOURCES:
+BOOKS:Represent a book in the library.
+* ATTRIBUTES:
+  •id: Unique identifier for the book (integer).
+  •title: Title of the book (string). 
+  •author: Author of the book (string).
+  •category: Genre or category of the book (string).     
+  •quantity: Number of copies available (integer). 
+  •published_date: Number of copies available (integer).
+API END POINTS DESIGNS:
+(1) CREATE A NEW BOOK
+          •ENDPOINT:POST /books
+          •DESCRIPTION:Add a new book to the library system.
+          •REQUEST BODY:
+            json
+             {
+                "title": "The Great Gatsby",
+                "author": "F. Scott Fitzgerald",
+                "category": "Fiction",
+                "quantity": 10,
+                "published_date": "1925-04-10"
+}
+• RESPONSE:
+          * STATUS:
+          *BODY:
+             json
+              {
+                "id": 1,
+                "title": "The Great Gatsby",
+                "author": "F. Scott Fitzgerald",
+                "category": "Fiction",
+                "quantity": 10,
+                "published_date": "1925-04-10"
+}
+(2) GET ALL BOOKS
+     •ENDPOINT:GET /books
+    • DESCRIPTION:Retrieve a list of all books in the library.
+    • QUERY PARAMETERS:
+           * category: Filter by category (optional).
+           *author: Filter by author (optional).
+           *limit: Number of books per page (optional, for pagination).
+           *page: Page number for pagination (optional).
+*Response:
+  *STATUS:
+  *BODY:
+     json
+[
+  {
+    "id": 1,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "category": "Fiction",
+    "quantity": 10,
+    "published_date": "1925-04-10"
+  },
+  {
+    "id": 2,
+    "title": "1984",
+    "author": "George Orwell",
+    "category": "Dystopian",
+    "quantity": 5,
+    "published_date": "1949-06-08"
+  }
+]
+(3) GET A BOOK BY ID:
+        * Endpoint: GET /books/{id}
+        * Description: Retrieve the details of a specific book by its ID.
+        *Response:
+             • Status: 200 OK
+             • BODY:
+                 json
+                   {
+                    "id": 1,
+                    "title": "The Great Gatsby",
+                    "author": "F. Scott Fitzgerald",
+                    "category": "Fiction",
+                    "quantity": 10,
+                   "published_date": "1925-04-10"
+}
+(4) UPDATE BOOK INFORMATION:
+              * Endpoint: PUT /books/{id}
+              * Description: Update the information of a book by its ID.
+               *Request Body:
+                 json
+        {
+  "title": "The Great Gatsby (Revised Edition)",
+  "author": "F. Scott Fitzgerald",
+  "category": "Fiction",
+  "quantity": 12,
+  "published_date": "1925-04-10"
+}
+•RESPONSE:
+    * STATUS: 200 OK
+    * BODY:
+       json
+{
+  "id": 1,
+  "title": "The Great Gatsby (Revised Edition)",
+  "author": "F. Scott Fitzgerald",
+  "category": "Fiction",
+  "quantity": 12,
+  "published_date": "1925-04-10"
+}
+(5) DELETE A BOOK:
+           *Endpoint: DELETE /books/{id}
+           *Description: Delete a book from the library system by its ID.
+           *Response:
+               *Status: 204 No Content
+               *Body: None
+(6) Search Books by Parameters
+               *Endpoint: GET /books/search
+               *Description: Search for books based on various parameters (title, author, category).
+               *Query Parameters:
+                       *title: Search by book title.
+                       *author: Search by author.
+                       *category: Search by category.
+*Response:
+      *Status: 200 OK
+      *Body:
+         json
+[
+  {
+    "id": 1,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "category": "Fiction",
+    "quantity": 10,
+    "published_date": "1925-04-10"
+  }
+]
+(7) GET BOOK COUNT:
+        *Endpoint: GET /books/count
+        *Description: Get the total number of books in the library.
+        *Response:
+               *Status: 200 OK
+               *Body:
+                  json
+{
+  "count": 100
+}
+
+(8) PAGINATION FOR BOOK LIST:
+                *Endpoint: GET /books?page=1&limit=10
+                *Description: Retrieve books in a paginated manner, 10 books per page.
+                *Response:
+                     *Status: 200 OK
+                     *BODY:
+                         json
+{
+  "page": 1,
+  "limit": 10,
+  "total_pages": 10,
+  "total_books": 100,
+  "books": [
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "category": "Fiction",
+      "quantity": 10,
+      "published_date": "1925-04-10"
+    },
+    ...
+  ]
+}
